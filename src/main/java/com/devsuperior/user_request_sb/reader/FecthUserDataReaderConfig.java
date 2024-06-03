@@ -1,5 +1,6 @@
 package com.devsuperior.user_request_sb.reader;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.batch.item.ItemReader;
@@ -23,10 +24,19 @@ public class FecthUserDataReaderConfig implements ItemReader<UserDTO> {
 
 	private int page = 0;
 
+	private List<UserDTO> users = new ArrayList<>();
+	private int userIndex = 0;
+	
 	@Override
 	public UserDTO read() throws Exception, UnexpectedInputException, ParseException, NonTransientResourceException {
-		// TODO Auto-generated method stub
-		return null;
+		UserDTO user;
+		if (userIndex < users.size()) {
+			user = users.get(userIndex);
+		}
+		else user = null;
+		
+		userIndex++;
+		return user;
 	}
 
 	private List<UserDTO> fetchUserDataFromAPI() {
